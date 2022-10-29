@@ -5,20 +5,8 @@ import './App.css';
 import { PopulatePokemon } from './API/Pokemon';
 
 function App() {
-	const [Renders, setRenders] = useState<number>(0);
-	const [Returned, setReturned] = useState<any>();
-	const [Loading, setLoading] = useState<boolean>(true);
-
-	const Initialise = async () => {
-		const Init = await PopulatePokemon();
-		setReturned(Init);
-		console.log(Returned);
-		setRenders(Renders + 1);
-		setLoading(false);
-	};
-
 	useEffect(() => {
-		Initialise();
+		PopulatePokemon();
 	}, []);
 
 	return (
@@ -30,16 +18,12 @@ function App() {
 				alignItems: 'center',
 			}}
 		>
-			{/* {Return}
-			<h2 style={{ color: 'red' }}>{Return}</h2>
-			<h2 style={{ color: 'red' }}>
-				Total Pokemon: {Return.RawReturnedTotalPokemon.Pokemon}
-			</h2> */}
-			{Loading ? (
+			Home
+			{/* {Loading ? (
 				<h2 style={{ color: 'red' }}>Loading...</h2>
 			) : (
-				<h2 style={{ color: 'red' }}>Count: {Returned.TotalPokemon.Count}</h2>
-			)}
+				<h2 style={{ color: 'red' }}>Loaded</h2>
+			)} */}
 		</div>
 	);
 }

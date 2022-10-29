@@ -22,7 +22,6 @@ export const PopulatePokemon = async () => {
 	const InitialCall = await axios.get(
 		'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0'
 	);
-	console.log('Initial Call Length:', InitialCall.data.results.length);
 
 	const PokePopper = async () => {
 		let A = 0;
@@ -43,9 +42,9 @@ export const PopulatePokemon = async () => {
 		};
 
 		let Populate = () => {
-			Pokes.length === 1154
+			Pokes.length === InitialCall.data.results.length
 				? clearInterval(Pop)
-				: console.log('Populating Iteration:', C);
+				: console.log('Populating Pokemon. Iteration:', C);
 			while (A <= B - 1) {
 				if (InitialCall.data.results[A] === undefined) {
 					break;
@@ -61,10 +60,7 @@ export const PopulatePokemon = async () => {
 		};
 
 		let Pop = setInterval(Populate, 3000);
-		setTimeout(() => console.log(Pokes), 12000);
 	};
 
 	PokePopper();
-
-	return { TotalPokemon };
 };
