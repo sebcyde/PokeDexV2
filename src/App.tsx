@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { PopulatePokemon } from './API/Pokemon';
 import { useDispatch, useSelector } from 'react-redux';
-import { MultiSliceActions, RootState } from './Redux/store';
+import { MultiSliceActions, RootState, store } from './Redux/store';
 import PokeDex from './Pages/PokeDex';
 
 function App() {
@@ -12,20 +12,18 @@ function App() {
 	const dispatch = useDispatch();
 
 	const Initialisation = async () => {
-		console.log(Loading);
-		await PopulatePokemon();
+		// console.log(Loading);
+		// await PopulatePokemon();
 		// await dispatch(MultiSliceActions.AddPokemon(Pokes));
-
 		// await dispatch(MultiSliceActions.AddPokemon(await PopulatePokemon()));
-		await dispatch(MultiSliceActions.SetLoading);
-		await console.log(Pokemon);
+		// await dispatch(MultiSliceActions.SetLoading);
+		// await console.log(Pokemon);
 		// await console.log(Pokes);
 	};
 
 	useEffect(() => {
-		// PopulatePokemon();
-		// Initialisation();
-	}, []);
+		console.log('Store Updated');
+	}, [store]);
 
 	return (
 		<div

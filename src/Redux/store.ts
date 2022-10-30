@@ -27,7 +27,8 @@ const MultiSlice = createSlice({
 			state.loading = !state.loading;
 		},
 		AddPokemon(state, action) {
-			state.pokemon = [...state.pokemon, action.payload];
+			state.pokemon.push(...action.payload);
+			// state.pokemon = [...state.pokemon, state.pokemon.push(action.payload) action.payload];
 		},
 		AddItems(state, action) {
 			state.items = [...state.items, action.payload];

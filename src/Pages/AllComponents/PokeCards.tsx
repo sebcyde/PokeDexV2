@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
 import { MultiSliceActions, RootState } from '../../Redux/store';
 
 function PokeCards() {
-	const [Pokemon, setPokemon] = useState<object[]>([]);
 	const StorePokemon = useAppSelector((state: RootState) => state.pokemon);
 	const dispatch = useAppDispatch();
 	let Pokes: any[] = [];
@@ -35,15 +34,21 @@ function PokeCards() {
 				// });
 			};
 
+			function countProps(obj: any[]) {
+				var count = 0;
+				for (var p in obj) {
+					obj.hasOwnProperty(p) && count++;
+				}
+				return count;
+			}
+
 			const Cleanup = () => {
 				clearInterval(Pop);
-				console.log(Pokes);
 				try {
 					console.log('Dispatching Pokes to Store');
 					dispatch(MultiSliceActions.AddPokemon(Pokes));
 					dispatch(MultiSliceActions.SetLoading());
 					console.log('Cleanup Pokes', Pokes);
-					console.log('Cleanup Pokemon', Pokemon);
 					console.log('Store Cleanup Pokemon', StorePokemon);
 				} catch (error) {
 					console.log(error);
@@ -51,9 +56,8 @@ function PokeCards() {
 			};
 
 			let Populate = () => {
-				console.log('Pokes length is:', Pokemon!.length);
+				console.log('Pokes length is:', countProps(Pokes));
 				console.log('Pokes', Pokes);
-				console.log('Pokemon', Pokemon);
 
 				if (A >= 1154) {
 					Cleanup();
@@ -65,9 +69,7 @@ function PokeCards() {
 						}
 						axios.get(InitialCall.data.results[A].url).then((result) => {
 							let data = result.data;
-							// dispatch(MultiSliceActions.AddPokemon(data));
 							Pokes.push(data);
-							setPokemon([...Pokemon, data]);
 						});
 						A++;
 					}
