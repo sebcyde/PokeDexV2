@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
+import { PokemonType, PokemonActionModel } from '../Redux/Types';
+import { addPokemon } from '../Redux/Actions';
+import { useDispatch } from 'react-redux';
 
 interface InitialPokemon {
 	name: string;
@@ -13,11 +16,8 @@ interface PokemonCounter {
 }
 
 export const PopulatePokemon = async () => {
+	const dispatch = useDispatch();
 	let Pokes: any[] = [];
-	let TotalPokemon = {
-		Pokemon: 1154,
-		Count: 0,
-	};
 
 	const InitialCall = await axios.get(
 		'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0'
@@ -41,9 +41,19 @@ export const PopulatePokemon = async () => {
 			});
 		};
 
+		const Cleanup = () => {
+			clearInterval(Pop);
+			console.log(Pokes);
+			try {
+				dispatch(addPokemon(Pokes));
+			} catch (error) {
+				console.log(error);
+			}
+		};
+
 		let Populate = () => {
 			Pokes.length === InitialCall.data.results.length
-				? clearInterval(Pop)
+				? Cleanup()
 				: console.log('Populating Pokemon. Iteration:', C);
 			while (A <= B - 1) {
 				if (InitialCall.data.results[A] === undefined) {
