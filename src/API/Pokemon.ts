@@ -15,12 +15,13 @@ interface PokemonCounter {
 }
 
 export const PopulatePokemon = async () => {
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 	let Pokes: any[] = [];
 
 	const InitialCall = await axios.get(
 		'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0'
 	);
+	let ArrayLength = InitialCall.data.results.length;
 
 	const PokePopper = async () => {
 		let A = 0;
@@ -44,14 +45,15 @@ export const PopulatePokemon = async () => {
 			clearInterval(Pop);
 			console.log(Pokes);
 			try {
-				dispatch(MultiSliceActions.AddPokemon(Pokes));
+				console.log('Would have dispatched Pokes here');
+				// dispatch(MultiSliceActions.AddPokemon(Pokes));
 			} catch (error) {
 				console.log(error);
 			}
 		};
 
 		let Populate = () => {
-			Pokes.length === InitialCall.data.results.length
+			Pokes.length === ArrayLength
 				? Cleanup()
 				: console.log('Populating Pokemon. Iteration:', C);
 			while (A <= B - 1) {
@@ -71,5 +73,7 @@ export const PopulatePokemon = async () => {
 		let Pop = setInterval(Populate, 3000);
 	};
 
-	PokePopper();
+	await PokePopper().then(() => {
+		return Pokes;
+	});
 };
