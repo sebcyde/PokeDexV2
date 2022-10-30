@@ -5,10 +5,11 @@ import { PopulatePokemon } from './API/Pokemon';
 import { useDispatch, useSelector } from 'react-redux';
 import { MultiSliceActions, RootState, store } from './Redux/store';
 import PokeDex from './Pages/PokeDex';
+import { LoadingObject } from './Pages/AllComponents/Loading/Loading';
 
 function App() {
-	const Loading = useSelector((state: RootState) => state.loading);
 	const Pokemon = useSelector((state: RootState) => state.pokemon);
+	let Loading = LoadingObject.Loading;
 	const dispatch = useDispatch();
 
 	const Initialisation = async () => {
@@ -41,7 +42,6 @@ function App() {
 			) : (
 				<h2 style={{ color: 'red' }}>Loaded Home</h2>
 			)}
-
 			<PokeDex />
 			{/* {Loading ? (
 				<h2 style={{ color: 'red' }}>Loading...</h2>

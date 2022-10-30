@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
 import { MultiSliceActions, RootState } from '../../Redux/store';
+import { LoadingObject } from './Loading/Loading';
 
 function PokeCards() {
 	const StorePokemon = useAppSelector((state: RootState) => state.pokemon);
 	const dispatch = useAppDispatch();
+	let Loading = LoadingObject.Loading;
 	let Pokes: any[] = [];
 
 	const PopulatePokemon = async () => {
@@ -47,7 +49,8 @@ function PokeCards() {
 				try {
 					console.log('Dispatching Pokes to Store');
 					dispatch(MultiSliceActions.AddPokemon(Pokes));
-					dispatch(MultiSliceActions.SetLoading());
+					LoadingObject.Loading = false;
+					// dispatch(MultiSliceActions.SetLoading());
 					console.log('Cleanup Pokes', Pokes);
 					console.log('Store Cleanup Pokemon', StorePokemon);
 				} catch (error) {
