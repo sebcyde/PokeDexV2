@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
-import { PokemonType, PokemonActionModel } from '../Redux/Types';
-import { addPokemon } from '../Redux/Actions';
 import { useDispatch } from 'react-redux';
+import { MultiSliceActions } from '../Redux/store';
 
 interface InitialPokemon {
 	name: string;
@@ -45,7 +44,7 @@ export const PopulatePokemon = async () => {
 			clearInterval(Pop);
 			console.log(Pokes);
 			try {
-				dispatch(addPokemon(Pokes));
+				dispatch(MultiSliceActions.AddPokemon(Pokes));
 			} catch (error) {
 				console.log(error);
 			}
